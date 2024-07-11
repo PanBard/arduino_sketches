@@ -1,9 +1,6 @@
 /**
  * This example shows how to upgrade from http connection to https connection.
  *
- * This example works on the Arduino-Pico SDK from Earle F. Philhower.
- * https://github.com/earlephilhower/arduino-pico
- *
  * Email: suwatchai@outlook.com
  *
  * Github: https://github.com/mobizt/ESP_SSLSClient
@@ -12,16 +9,20 @@
  *
  */
 #include <Arduino.h>
-#if defined(ESP32) || defined(ARDUINO_RASPBERRY_PI_PICO_W)
+#if defined(ESP32) || defined(ARDUINO_RASPBERRY_PI_PICO_W) || defined(ARDUINO_GIGA)
 #include <WiFi.h>
 #elif defined(ESP8266)
 #include <ESP8266WiFi.h>
-#elif __has_include(<WiFiNINA.h>)
+#elif __has_include(<WiFiNINA.h>) || defined(ARDUINO_NANO_RP2040_CONNECT)
 #include <WiFiNINA.h>
 #elif __has_include(<WiFi101.h>)
 #include <WiFi101.h>
-#elif __has_include(<WiFiS3.h>)
+#elif __has_include(<WiFiS3.h>) || defined(ARDUINO_UNOWIFIR4)
 #include <WiFiS3.h>
+#elif __has_include(<WiFiC3.h>) || defined(ARDUINO_PORTENTA_C33)
+#include <WiFiC3.h>
+#elif __has_include(<WiFi.h>)
+#include <WiFi.h>
 #endif
 
 #include <ESP_SSLClient.h>
@@ -81,6 +82,12 @@ void setup()
    */
   ssl_client.setDebugLevel(1);
 
+  // In case ESP32 WiFiClient, the session timeout should be set,
+  // if the TCP session was kept alive because it was unable to detect the server disconnection.
+#if defined(ESP32)
+  ssl_client.setSessionTimeout(120); // Set the timeout in seconds (>=120 seconds)
+#endif
+
   // Assign the basic client
   // Due to the basic_client pointer is assigned, to avoid dangling pointer, basic_client should be existed
   // as long as it was used by ssl_client for transportation.
@@ -102,19 +109,19 @@ void loop()
     Serial.print("Upgrade to HTTPS...");
     if (!ssl_client.connectSSL())
     {
-      Serial.println(" failed\n");
+      Serial.println(" failed\r\n");
       return;
     }
 
     Serial.println(" ok");
 
     Serial.println("Send POST request...");
-    ssl_client.print("POST /api/users HTTP/1.1\n");
-    ssl_client.print("Host: reqres.in\n");
-    ssl_client.print("Content-Type: application/json\n");
+    ssl_client.print("POST /api/users HTTP/1.1\r\n");
+    ssl_client.print("Host: reqres.in\r\n");
+    ssl_client.print("Content-Type: application/json\r\n");
     ssl_client.print("Content-Length: ");
     ssl_client.print(payload.length());
-    ssl_client.print("\n\n");
+    ssl_client.print("\r\n\r\n");
     ssl_client.print(payload);
 
     Serial.print("Read response...");
