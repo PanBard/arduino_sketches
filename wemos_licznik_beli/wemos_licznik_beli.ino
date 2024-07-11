@@ -1,21 +1,19 @@
 #include "HallaStaff.h"
 #include "OledStuff.h"
-
-
+#include "ButtonStuff.h"
+#include "LEDStuff.h"
+#include "OneFunctionToRuleThemAll.h"
 void setup() 
 {
-  Serial.begin(9600);
+  // Serial.begin(9600);
   oled_start(); //OLED setup 
-  // updateScreen();
-  delay(1000);
-  alert();
+  button_start();
+  LED_start(); 
 }
 
 void loop() 
 {
-// oled_display("elo");
-updateScreen();
-halotron_run();
+  main_function();
 }
 
 
