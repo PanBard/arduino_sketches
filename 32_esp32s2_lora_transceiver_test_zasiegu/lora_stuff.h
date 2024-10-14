@@ -7,7 +7,8 @@
 //---lora
 
 int counter = 0; //count received lora packets 
-long intervalTime = 0; //for time measurement between received lora packet
+long intervalTime = 5000; //for time measurement between sending lora packet <<<------- SETUP [ms]
+long sending_time = 0; //for save time when packet is send
 String message = ""; // save message from lora
 String logs = ""; //log all lora message to one string
 
@@ -22,7 +23,7 @@ void lora_start()
       delay(10000);
     };
   }
-  LoRa.enableCrc(); // <-----------CRC
+  LoRa.setTxPower(20);
   // Serial.println("LoRa status: ok");
 }
 
@@ -32,7 +33,7 @@ void lora_send_message(String message_to_send)
   LoRa.print(message_to_send);
   LoRa.endPacket();
   logs += ("Sent: "+message_to_send+"\n");
-  blink();
+  // blink();
 }
 
 void loraEngineReceiver() 
@@ -40,21 +41,30 @@ void loraEngineReceiver()
   int packetSize = LoRa.parsePacket();
   if (packetSize) 
   {
-    blink();
+    // blink();
     while (LoRa.available()) //loop for lora message receiver
     { 
       int inChar = LoRa.read();
       message += (char)inChar;
     }
+    delay(200);
+    lora_send_message("Odebrano: "+String(message));
 
-    logs += ("Received: "+message+"\n");
     message = ""; // clear received message
-    intervalTime = millis();
-    counter ++;
-    // Serial.print("Received packet: ");
-    // Serial.print(message);
-    // Serial.println(" (with RSSI "+String(rssi)+")");
   }
+}
+
+void loraRabotajet() 
+{
+
+  if(millis() - sending_time > intervalTime)
+  {
+    lora_send_message("Test zasięgu nr "+String(counter));
+    counter++;
+    sending_time = millis();
+  }
+  // loraEngineReceiver();
+
 }
 
 

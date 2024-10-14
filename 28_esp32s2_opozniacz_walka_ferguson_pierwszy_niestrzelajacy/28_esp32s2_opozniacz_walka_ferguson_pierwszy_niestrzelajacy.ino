@@ -23,60 +23,24 @@ void run()
     //   delay(200);            
     // }
 
-      pwm.writeScaled(0.85); // 0.85--> 5V
-      delay(600);     
-      pwm.writeScaled(0);
-      delay(800); 
-
-      pwm.writeScaled(0.85); // 0.85--> 5V
-      delay(300);     
-      pwm.writeScaled(0);
+     pwm.writeScaled(1);
+      delay(1000);     
+    pwm.writeScaled(0);
       delay(600); 
 
-      pwm.writeScaled(0.86);
+      for (float pwm_value = 0; pwm_value <= 2; pwm_value += 1) {
+		  pwm.writeScaled(1);
       delay(100);     
       pwm.writeScaled(0);
-      delay(200); 
+      delay(500);            
+    }
 
-      pwm.writeScaled(0.86);
-      delay(100);     
-      pwm.writeScaled(0);
-      delay(400); 
-
-
-
-      pwm.writeScaled(0.80);
-      delay(50);  
-      pwm.writeScaled(0.81);
-      delay(120);   
-      pwm.writeScaled(0.85);
-      delay(120);  
-      pwm.writeScaled(0);
-      delay(700);   
-
-      		  pwm.writeScaled(0.9);
-      delay(140);     
-      pwm.writeScaled(0);
-      delay(600);   
-
-      		  pwm.writeScaled(0.9);
+    	for (float pwm_value = 0; pwm_value <= 3; pwm_value += 1) {
+		  pwm.writeScaled(1);
       delay(150);     
       pwm.writeScaled(0);
-      delay(600);   
-
-    //   for (float pwm_value = 0; pwm_value <= 2; pwm_value += 1) {
-		//   pwm.writeScaled(0.88);
-    //   delay(100);     
-    //   pwm.writeScaled(0);
-    //   delay(500);            
-    // }
-
-    // 	for (float pwm_value = 0; pwm_value <= 3; pwm_value += 1) {
-		//   pwm.writeScaled(0.9);
-    //   delay(150);     
-    //   pwm.writeScaled(0);
-    //   delay(600);            
-    // }
+      delay(600);            
+    }
 
 
     	for (float pwm_value = 0; pwm_value <= 5; pwm_value += 1) {
@@ -93,20 +57,20 @@ void run()
       delay(400);            
     }
 
-    //   	for (float pwm_value = 0; pwm_value <= 5; pwm_value += 1) {
-		//   pwm.writeScaled(1);
-    //   delay(400);     
-    //   pwm.writeScaled(0);
-    //   delay(400);            
-    // }
+      	for (float pwm_value = 0; pwm_value <= 5; pwm_value += 1) {
+		  pwm.writeScaled(1);
+      delay(400);     
+      pwm.writeScaled(0);
+      delay(400);            
+    }
 
 
-   	// for (float pwm_value = 0; pwm_value <= 5; pwm_value += 1) {
-		//   pwm.writeScaled(1);
-    //   delay(800);     
-    //   pwm.writeScaled(0);
-    //   delay(800);            
-    // }
+   	for (float pwm_value = 0; pwm_value <= 5; pwm_value += 1) {
+		  pwm.writeScaled(1);
+      delay(800);     
+      pwm.writeScaled(0);
+      delay(800);            
+    }
 
     pwm.writeScaled(1);
 }

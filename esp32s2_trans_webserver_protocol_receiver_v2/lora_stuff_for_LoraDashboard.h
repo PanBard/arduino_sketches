@@ -31,12 +31,9 @@ void blink() {
 
 int checksum_calculator(String str) 
 {
-  // Length (with one extra character for the null terminator)
-  int str_len = str.length() + 1; 
-  // Prepare the character array (the buffer) 
-  char char_array[str_len];
-  // Copy it over 
-  str.toCharArray(char_array, str_len);
+  int str_len = str.length() + 1; // Length (with one extra character for the null terminator)
+  char char_array[str_len];  // Prepare the character array (the buffer) 
+  str.toCharArray(char_array, str_len);  // Copy it over 
   int checksum = 0;
   for(char h: char_array){
       checksum += int(h);
